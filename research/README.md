@@ -50,6 +50,13 @@ Usar uno de estos estados en cada informe:
 
 - [Circle, Arc y USDC](./technology/001-circle-arc-usdc.md)
 - [Tap to Pay on iPhone](./technology/002-tap-to-pay-iphone.md)
+- [Midnight como privacidad y Arc como settlement](./technology/003-midnight-privacy-arc-settlement.md)
+- [Resultados de validaciones técnicas](./technology/004-validation-results.md)
+
+### Journal
+
+- [Privacidad, Midnight y Arc - 2026-08-13](./journal/2026-08-13-privacy-architecture.md)
+- [Validación de arquitectura - 2026-08-13](./journal/2026-08-13-validation-round.md)
 
 ## Plantilla
 
