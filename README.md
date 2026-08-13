@@ -86,6 +86,7 @@ Más información:
 - [Circle Skills y MCP](./docs/integrations/circle-skills.md)
 - [Contribuir](./CONTRIBUTING.md)
 - [Seguridad](./SECURITY.md)
+- [Research y decisiones](./research/README.md)
 
 ## Circle Skills
 
