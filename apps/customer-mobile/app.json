@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "Arc Pay",
+    "slug": "arc-pay",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "experiments": { "reactCompiler": true }
+  }
+}

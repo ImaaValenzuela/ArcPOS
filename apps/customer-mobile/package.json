@@ -1,5 +1,5 @@
 {
-  "name": "@arcpos/merchant-mobile",
+  "name": "@arcpos/customer-mobile",
   "private": true,
   "version": "0.1.0",
   "main": "./index.js",
