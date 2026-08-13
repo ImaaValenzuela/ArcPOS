@@ -1,1 +1,9 @@
-{ "expo": { "name": "ArcPOS", "slug": "arcpos", "version": "0.1.0", "orientation": "portrait" } }
+{
+  "expo": {
+    "name": "ArcPOS",
+    "slug": "arcpos",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "experiments": { "reactCompiler": true }
+  }
+}
