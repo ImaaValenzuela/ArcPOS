@@ -46,6 +46,12 @@ Usar uno de estos estados en cada informe:
 
 - [Pagos QR e infraestructura argentina](./market/001-pagos-qr-argentina.md)
 - [Competencia en pagos ARS y USDC](./market/002-competencia-pagos-ars-usdc.md)
+- [Flujo de pago ARS a liquidación USDC](./market/003-flujo-ars-a-usdc.md)
+- [Proveedores y competencia para ARS, USDC y settlement](./market/004-proveedores-y-competencia-local.md)
+
+### Regulación
+
+- [Regulación argentina: conversión ARS, transferencia y custodia cripto](./regulation/001-psav-y-conversion-ars-crypto.md)
 
 ### Tecnología
 
@@ -53,6 +59,8 @@ Usar uno de estos estados en cada informe:
 - [Tap to Pay on iPhone](./technology/002-tap-to-pay-iphone.md)
 - [Midnight como privacidad y Arc como settlement](./technology/003-midnight-privacy-arc-settlement.md)
 - [Resultados de validaciones técnicas](./technology/004-validation-results.md)
+- [Rol de Arc y stack recomendado para el MVP](./technology/005-rol-de-arc-y-stack-mvp.md)
+- [Activos y wallets para el MVP](./technology/006-activos-y-wallets-para-el-mvp.md)
 
 ### Journal
 
