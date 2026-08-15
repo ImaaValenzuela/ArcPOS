@@ -45,6 +45,7 @@ Usar uno de estos estados en cada informe:
 ### Mercado y regulación
 
 - [Pagos QR e infraestructura argentina](./market/001-pagos-qr-argentina.md)
+- [Competencia en pagos ARS y USDC](./market/002-competencia-pagos-ars-usdc.md)
 
 ### Tecnología
 
