@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { CameraView } from "expo-camera";
 import { BrandHeader } from "../components/brand-header";
 import { MerchantSummary } from "../components/merchant-summary";
 import { PaymentMethod, PaymentMethodRow } from "../components/payment-method-row";
@@ -12,8 +13,8 @@ function PrimaryButton({ label, onPress }: { label: string; onPress: () => void 
   return <Pressable onPress={onPress} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}><Text style={styles.primaryText}>{label}</Text><Text style={styles.arrow}>→</Text></Pressable>;
 }
 
-export function RequestScreen({ onContinue }: { onContinue: () => void }) {
-  return <><BrandHeader /><View style={styles.content}><Text style={styles.eyebrow}>SOLICITUD DE PAGO</Text><Text style={styles.title}>Te están cobrando.</Text><MerchantSummary /><View style={styles.amountCard}><Text style={styles.amountLabel}>Total</Text><Text style={styles.amount}>{amount}</Text><Text style={styles.expires}>Este cobro vence en 09:42</Text></View><Text style={styles.safeCopy}>Verificá el comercio y el importe antes de continuar.</Text></View><View style={styles.bottom}><PrimaryButton label="Continuar" onPress={onContinue} /></View></>;
+export function RequestScreen({ onContinue, onScan }: { onContinue: () => void; onScan: (value: string) => void }) {
+  return <><BrandHeader /><View style={styles.content}><Text style={styles.eyebrow}>ESCANEÁ PARA PAGAR</Text><Text style={styles.title}>Apuntá al QR del comercio.</Text><CameraView style={styles.camera} barcodeScannerSettings={{ barcodeTypes: ["qr"] }} onBarcodeScanned={({ data }) => onScan(data)} /><Text style={styles.safeCopy}>El QR vincula este customer con un cobro único y muestra el importe antes de confirmar.</Text><TextInput autoCapitalize="none" placeholder="O pegá taptopay://pay/..." onSubmitEditing={(event) => onScan(event.nativeEvent.text)} style={styles.input} /></View><View style={styles.bottom}><PrimaryButton label="Usar cobro de demo" onPress={onContinue} /></View></>;
 }
 
 export function MethodScreen({ selected, onSelect, onBack, onContinue }: { selected: PaymentMethod; onSelect: (method: PaymentMethod) => void; onBack: () => void; onContinue: () => void }) {
@@ -46,6 +47,8 @@ const styles = StyleSheet.create({
   eyebrow: { color: colors.turquoiseDark, fontSize: 11, fontWeight: "800", letterSpacing: 1.5 },
   title: { color: colors.ink, fontSize: 31, lineHeight: 36, fontWeight: "800", letterSpacing: -1 },
   amountCard: { backgroundColor: colors.sky, borderRadius: 22, padding: 24, gap: 6 },
+  camera: { height: 220, borderRadius: 22, overflow: "hidden" },
+  input: { backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, borderRadius: 14, padding: 14, color: colors.ink },
   amountLabel: { color: colors.inkMuted, fontSize: 13 },
   amount: { color: colors.ink, fontSize: 38, fontWeight: "800", fontVariant: ["tabular-nums"] },
   expires: { color: colors.turquoiseDark, fontSize: 12, fontWeight: "700" },

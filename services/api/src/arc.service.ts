@@ -19,6 +19,21 @@ export class ArcService {
     };
   }
 
+  async getUsdcBalance(address: string) {
+    const data = `0x70a08231${address.slice(2).toLowerCase().padStart(64, "0")}`;
+    const raw = await this.rpc<string>("eth_call", [{ to: arcTestnet.usdcAddress, data }, "latest"]);
+    const units = BigInt(raw);
+    return {
+      address,
+      token: "USDC",
+      network: "arc-testnet",
+      units: units.toString(),
+      amount: `${units / 1_000_000n}.${(units % 1_000_000n).toString().padStart(6, "0")}`,
+      decimals: arcTestnet.usdcDecimals,
+      explorerUrl: `${arcTestnet.explorerUrl}/address/${address}`,
+    };
+  }
+
   async findPayment({ destination, amount, fromBlock }: { destination: string; amount: string; fromBlock?: string }) {
     const paddedDestination = destination.slice(2).toLowerCase().padStart(64, "0");
     const latestBlock = await this.rpc<string>("eth_blockNumber", []);

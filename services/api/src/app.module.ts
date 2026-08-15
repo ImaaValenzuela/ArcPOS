@@ -1,6 +1,7 @@
 import { Controller, Get, Module } from "@nestjs/common";
 import { ArcService } from "./arc.service.js";
 import { PaymentsController } from "./payments.controller.js";
+import { QuoteController } from "./quote.controller.js";
 
 @Controller("health")
 class HealthController {
@@ -10,5 +11,5 @@ class HealthController {
   }
 }
 
-@Module({ controllers: [HealthController, PaymentsController], providers: [ArcService] })
+@Module({ controllers: [HealthController, PaymentsController, QuoteController], providers: [ArcService] })
 export class AppModule {}

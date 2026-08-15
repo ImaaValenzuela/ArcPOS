@@ -2,6 +2,13 @@ export type Currency = "ARS" | "USDC";
 
 export type ChargeScreenStep = "charge" | "review" | "qr" | "success";
 
+export type UsdcQuote = {
+  rate: string;
+  quotedAt: string;
+  expiresInSeconds: number;
+  source: string;
+};
+
 export type OnboardingScreenStep =
   | "welcome"
   | "signin"
