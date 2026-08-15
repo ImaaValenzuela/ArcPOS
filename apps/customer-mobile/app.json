@@ -4,7 +4,6 @@
     "slug": "arc-pay",
     "version": "0.1.0",
     "orientation": "portrait",
-    "experiments": { "reactCompiler": true },
-    "plugins": [["expo-camera", { "cameraPermission": "Permití la cámara para escanear cobros." }]]
+    "experiments": { "reactCompiler": true }
   }
 }

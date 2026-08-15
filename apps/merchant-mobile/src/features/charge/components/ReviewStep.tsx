@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Header } from "../../../components";
-import { Currency, UsdcQuote } from "../../../types";
+import { Currency } from "../../../types";
 import { formatAmount } from "../../../utils/formatAmount";
 import { colors } from "../../../../theme/colors";
 
@@ -10,7 +10,6 @@ interface ReviewStepProps {
   currency: Currency;
   onBack: () => void;
   onConfirm: () => void;
-  quote: UsdcQuote | null;
 }
 
 export function ReviewStep({
@@ -18,9 +17,7 @@ export function ReviewStep({
   currency,
   onBack,
   onConfirm,
-  quote,
 }: ReviewStepProps) {
-  const usdcAmount = quote ? Number(amount.replace(",", ".")) / Number(quote.rate) : 0;
   return (
     <>
       <Header onBack={onBack} />
@@ -28,26 +25,26 @@ export function ReviewStep({
         <Text style={styles.eyebrow}>REVISÁ ANTES DE COBRAR</Text>
         <Text style={styles.title}>Todo listo.</Text>
         <View style={styles.reviewAmount}>
-          <Text style={styles.reviewLabel}>Cliente paga</Text>
-          <Text style={styles.reviewValue}>$ {formatAmount(amount)}</Text>
-          <Text style={styles.reviewCurrency}>Pesos argentinos</Text>
-        </View>
-        <Text style={styles.arrow}>↓</Text>
-        <View style={[styles.reviewAmount, styles.receivesAmount]}>
-          <Text style={styles.reviewLabel}>Tu comercio recibe</Text>
-          <Text style={[styles.reviewValue, styles.receivesValue]}>{usdcAmount.toFixed(2)} USDC</Text>
-          <Text style={styles.reviewCurrency}>En tu wallet de Arc · cotización {quote ? Number(quote.rate).toLocaleString("es-AR", { minimumFractionDigits: 2 }) : "--"} ARS</Text>
+          <Text style={styles.reviewLabel}>Vas a cobrar</Text>
+          <Text style={styles.reviewValue}>
+            {currency === "USDC" ? "US$" : "$"} {formatAmount(amount)}
+          </Text>
+          <Text style={styles.reviewCurrency}>
+            {currency === "ARS"
+              ? "Pesos argentinos"
+              : "Dólares digitales · Arc"}
+          </Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.infoIcon}>QR</Text>
           <Text style={styles.infoText}>
-            El cliente paga en pesos. La conversión a USDC la realiza el flujo de settlement.
+            El cliente escanea y paga desde su billetera.
           </Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.infoIcon}>✓</Text>
           <Text style={styles.infoText}>
-            Esta revisión no crea ni confirma el cobro todavía.
+            Vas a ver una confirmación cuando el pago se simule.
           </Text>
         </View>
       </View>
@@ -104,18 +101,6 @@ const styles = StyleSheet.create({
     color: colors.turquoiseDark,
     fontSize: 13,
     fontWeight: "700",
-  },
-  arrow: {
-    color: colors.inkMuted,
-    fontSize: 20,
-    textAlign: "center",
-  },
-  receivesAmount: {
-    backgroundColor: colors.skyDeep,
-    marginTop: 0,
-  },
-  receivesValue: {
-    color: colors.success,
   },
   infoRow: {
     flexDirection: "row",

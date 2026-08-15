@@ -62,7 +62,6 @@ Usar uno de estos estados en cada informe:
 - [Resultados de validaciones técnicas](./technology/004-validation-results.md)
 - [Rol de Arc y stack recomendado para el MVP](./technology/005-rol-de-arc-y-stack-mvp.md)
 - [Activos y wallets para el MVP](./technology/006-activos-y-wallets-para-el-mvp.md)
-- [Integración completa con Arc](./technology/007-arc-integration-complete.md)
 
 ### Journal
 

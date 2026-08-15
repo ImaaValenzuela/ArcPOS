@@ -4,29 +4,41 @@ import { Header } from "../../../components";
 import { Currency } from "../../../types";
 import { formatAmount } from "../../../utils/formatAmount";
 import { colors } from "../../../../theme/colors";
-import QRCode from "react-native-qrcode-svg";
 
 interface QrStepProps {
   amount: string;
   currency: Currency;
   onCancel: () => void;
   onPaid: () => void;
-  qrPayload: string;
-  paymentId?: string;
 }
 
-export function QrStep({ amount, currency, onCancel, onPaid, qrPayload, paymentId }: QrStepProps) {
+export function QrStep({ amount, currency, onCancel, onPaid }: QrStepProps) {
   return (
     <>
       <Header onBack={onCancel} />
       <View style={styles.qrContent}>
-        <Text style={styles.eyebrow}>COBRO ACTIVO · QR SANDBOX</Text>
+        <Text style={styles.eyebrow}>COBRO ACTIVO · MOCK</Text>
         <Text style={styles.title}>Mostrale este código al cliente.</Text>
         <Text style={styles.qrAmount}>
           {currency === "USDC" ? "US$" : "$"} {formatAmount(amount)}
         </Text>
-        <View style={styles.qrFrame}><QRCode value={qrPayload} size={190} color={colors.ink} backgroundColor={colors.white} /></View>
-        <Text style={styles.qrHint}>Escaneá desde Customer · {paymentId?.slice(0, 8)}</Text>
+        <View style={styles.qrFrame}>
+          <View style={styles.qrGrid}>
+            {Array.from({ length: 49 }).map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.qrCell,
+                  (index * 17 + index) % 5 < 2 && styles.qrCellFilled,
+                ]}
+              />
+            ))}
+          </View>
+          <View style={styles.qrCenter}>
+            <Text style={styles.qrCenterText}>A</Text>
+          </View>
+        </View>
+        <Text style={styles.qrHint}>Esperando el pago · vence en 09:42</Text>
       </View>
       <View style={styles.bottomActions}>
         <Pressable onPress={onPaid} style={styles.mockConfirm}>
