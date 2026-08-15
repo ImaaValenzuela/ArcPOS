@@ -1,9 +1,36 @@
 import { Injectable, ServiceUnavailableException } from "@nestjs/common";
 import { arcTestnet } from "@arcpos/config";
 
-const transferTopic = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aebc7f7b4e";
+/**
+ * topic0 de `Transfer(address,address,uint256)`, identico en todo ERC-20.
+ * Es keccak256 de la firma del evento, no un valor configurable.
+ */
+const transferTopic = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+
+/** `Transfer` indexa `from` y `to`: topic0, from, to. El monto viaja en `data`. */
+const transferTopicCount = 3;
 
 type RpcResponse<T> = { result?: T; error?: { message: string } };
+
+type TransferLog = {
+  address: string;
+  topics: string[];
+  data: string;
+  transactionHash: string;
+  blockNumber: string;
+};
+
+/** Lee el monto transferido desde `data`. Devuelve null si el log no tiene la forma esperada. */
+function readTransferValue(log: TransferLog): bigint | null {
+  if (log.topics.length !== transferTopicCount) return null;
+  if (!log.data || log.data === "0x") return null;
+
+  try {
+    return BigInt(log.data);
+  } catch {
+    return null;
+  }
+}
 
 @Injectable()
 export class ArcService {
@@ -39,7 +66,7 @@ export class ArcService {
     const latestBlock = await this.rpc<string>("eth_blockNumber", []);
     const latest = BigInt(latestBlock);
     const searchFrom = fromBlock ? BigInt(fromBlock) : latest > 1_000n ? latest - 1_000n : 0n;
-    const logs = await this.rpc<Array<{ address: string; topics: string[]; transactionHash: string; blockNumber: string }>>(
+    const logs = await this.rpc<TransferLog[]>(
       "eth_getLogs",
       [{
         address: arcTestnet.usdcAddress,
@@ -50,7 +77,7 @@ export class ArcService {
     );
 
     const expected = BigInt(amount);
-    const match = logs.find((log) => BigInt(`0x${log.topics[3].slice(2)}`) === expected);
+    const match = logs.find((log) => readTransferValue(log) === expected);
     return match
       ? { status: "confirmed" as const, txHash: match.transactionHash, blockNumber: Number.parseInt(match.blockNumber, 16) }
       : { status: "pending" as const };
