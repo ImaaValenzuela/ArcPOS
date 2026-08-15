@@ -52,6 +52,7 @@ Usar uno de estos estados en cada informe:
 ### Regulación
 
 - [Regulación argentina: conversión ARS, transferencia y custodia cripto](./regulation/001-psav-y-conversion-ars-crypto.md)
+- [Impuestos argentinos cuando un usuario recibe USDC](./regulation/002-impuestos-usuario-recibe-usdc.md)
 
 ### Tecnología
 
