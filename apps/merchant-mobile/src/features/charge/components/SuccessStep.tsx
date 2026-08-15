@@ -9,14 +9,12 @@ interface SuccessStepProps {
   amount: string;
   currency: Currency;
   onNewCharge: () => void;
-  walletBalance: number;
 }
 
 export function SuccessStep({
   amount,
   currency,
   onNewCharge,
-  walletBalance,
 }: SuccessStepProps) {
   return (
     <>
@@ -31,7 +29,6 @@ export function SuccessStep({
           {currency === "USDC" ? "US$" : "$"} {formatAmount(amount)}
         </Text>
         <Text style={styles.successTime}>Venta simulada · Ahora</Text>
-        <View style={styles.walletCard}><Text style={styles.walletLabel}>Wallet simulada · Arc</Text><Text style={styles.walletBalance}>{walletBalance.toFixed(2)} USDC</Text></View>
       </View>
       <View style={styles.bottomActions}>
         <Pressable onPress={onNewCharge} style={styles.primaryButton}>
@@ -87,24 +84,6 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     fontSize: 13,
     marginTop: 3,
-  },
-  walletCard: {
-    width: "100%",
-    marginTop: 22,
-    padding: 16,
-    borderRadius: 16,
-    backgroundColor: colors.sky,
-    gap: 5,
-  },
-  walletLabel: {
-    color: colors.inkMuted,
-    fontSize: 12,
-  },
-  walletBalance: {
-    color: colors.success,
-    fontSize: 24,
-    fontWeight: "800",
-    fontVariant: ["tabular-nums"],
   },
   bottomActions: {
     gap: 12,

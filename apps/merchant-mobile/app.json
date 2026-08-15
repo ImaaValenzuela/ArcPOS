@@ -4,8 +4,6 @@
     "slug": "arcpos",
     "version": "0.1.0",
     "orientation": "portrait",
-    "experiments": { "reactCompiler": true },
-    "androidStatusBar": { "hidden": true, "translucent": true },
-    "ios": { "statusBarHidden": true }
+    "experiments": { "reactCompiler": true }
   }
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Header } from "../../../components";
+import { Header, CurrencyPicker } from "../../../components";
 import { KEYPAD_KEYS } from "../../../constants/appConstants";
-import { Currency, UsdcQuote } from "../../../types";
+import { Currency } from "../../../types";
 import { formatAmount } from "../../../utils/formatAmount";
 import { colors } from "../../../../theme/colors";
 
@@ -12,10 +12,6 @@ interface ChargeStepProps {
   onAddKey: (key: string) => void;
   onCurrency: (value: Currency) => void;
   onContinue: () => void;
-  quote: UsdcQuote | null;
-  quoteError: string;
-  quoteLoading: boolean;
-  onRefreshQuote: () => void;
 }
 
 export function ChargeStep({
@@ -24,13 +20,8 @@ export function ChargeStep({
   onAddKey,
   onCurrency,
   onContinue,
-  quote,
-  quoteError,
-  quoteLoading,
-  onRefreshQuote,
 }: ChargeStepProps) {
-  const isButtonDisabled = !amount || amount === "0" || !quote;
-  const usdcAmount = quote ? Number(amount.replace(",", ".")) / Number(quote.rate) : 0;
+  const isButtonDisabled = !amount || amount === "0";
 
   return (
     <>
@@ -45,20 +36,7 @@ export function ChargeStep({
         </Text>
         <Text style={styles.amountHint}>Ingresá el importe</Text>
       </View>
-      <View style={styles.quoteCard}>
-        <View style={styles.quoteHeader}>
-          <Text style={styles.quoteEyebrow}>RECIBÍS EN USDC</Text>
-          <Pressable onPress={onRefreshQuote} accessibilityLabel="Actualizar cotización">
-            <Text style={styles.refresh}>↻</Text>
-          </Pressable>
-        </View>
-        {quote ? (
-          <>
-            <Text style={styles.quoteValue}>{usdcAmount.toFixed(2)} <Text style={styles.quoteUnit}>USDC</Text></Text>
-            <View style={styles.quoteMeta}><Text style={styles.quoteRate}>1 USDC = {Number(quote.rate).toLocaleString("es-AR", { minimumFractionDigits: 2 })} ARS</Text><Text style={styles.quoteLive}>Fija</Text></View>
-          </>
-        ) : <Text style={styles.quoteError}>{quoteError || "Cargando cotización..."}</Text>}
-      </View>
+      <CurrencyPicker currency={currency} onChange={onCurrency} />
       <View style={styles.keypad}>
         {KEYPAD_KEYS.map((key) => (
           <Pressable
@@ -83,7 +61,7 @@ export function ChargeStep({
         <Text style={styles.primaryButtonText}>Revisar cobro</Text>
         <Text style={styles.buttonArrow}>→</Text>
       </Pressable>
-      <Text style={styles.mockNote}>Arc Testnet · cotización de sandbox</Text>
+      <Text style={styles.mockNote}>Prototipo visual · cobros simulados</Text>
     </>
   );
 }
@@ -91,7 +69,7 @@ export function ChargeStep({
 const styles = StyleSheet.create({
   intro: {
     gap: 8,
-    marginTop: 4,
+    marginTop: 16,
   },
   eyebrow: {
     color: colors.turquoiseDark,
@@ -108,7 +86,7 @@ const styles = StyleSheet.create({
   },
   amountPanel: {
     alignItems: "center",
-    paddingVertical: 8,
+    paddingVertical: 18,
     gap: 5,
   },
   amount: {
@@ -126,12 +104,12 @@ const styles = StyleSheet.create({
   keypad: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 7,
+    gap: 10,
   },
   key: {
     width: "31.8%",
-    minHeight: 48,
-    borderRadius: 13,
+    minHeight: 58,
+    borderRadius: 16,
     backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
@@ -153,8 +131,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   primaryButton: {
-    minHeight: 52,
-    borderRadius: 14,
+    minHeight: 58,
+    borderRadius: 16,
     backgroundColor: colors.ink,
     flexDirection: "row",
     alignItems: "center",
@@ -177,56 +155,6 @@ const styles = StyleSheet.create({
     color: colors.inkMuted,
     fontSize: 11,
     textAlign: "center",
-    marginTop: -8,
-  },
-  quoteCard: {
-    backgroundColor: colors.sky,
-    borderRadius: 20,
-    padding: 18,
-    gap: 10,
-  },
-  quoteHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  quoteEyebrow: {
-    color: colors.turquoiseDark,
-    fontSize: 10,
-    fontWeight: "800",
-    letterSpacing: 1.2,
-  },
-  refresh: {
-    color: colors.turquoiseDark,
-    fontSize: 22,
-  },
-  quoteValue: {
-    color: colors.ink,
-    fontSize: 34,
-    fontWeight: "800",
-    fontVariant: ["tabular-nums"],
-  },
-  quoteUnit: {
-    color: colors.turquoiseDark,
-    fontSize: 13,
-    fontWeight: "800",
-  },
-  quoteMeta: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  quoteRate: {
-    color: colors.inkMuted,
-    fontSize: 12,
-  },
-  quoteLive: {
-    color: colors.success,
-    fontSize: 12,
-    fontWeight: "700",
-  },
-  quoteError: {
-    color: colors.error,
-    fontSize: 13,
-    lineHeight: 19,
+    marginTop: -14,
   },
 });
