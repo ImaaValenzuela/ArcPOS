@@ -72,6 +72,12 @@ importers:
 
   services/api:
     dependencies:
+      '@arcpos/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@arcpos/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
       '@nestjs/common':
         specifier: ^10.4.15
         version: 10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2)
